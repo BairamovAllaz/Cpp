@@ -44,6 +44,10 @@ int main(){
     ShiftMyColumn(matrix,height,index);
     cout << "New Matrix: " << endl;
     PrintMatrix(matrix,height,width);
+    for (size_t i = 0; i < width; i++)
+    {
+        delete[] matrix[i];
+    }
     delete[] matrix;
     return 0;
 }
