@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+///find ip
 bool isIp(char *IP){ 
     int segs = 0;
     int chcnt = 0;
