@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 using namespace std;
+//dynamic template
 template <typename T1, typename T2>
 void fill(T1 **matrix, T2 height, T2 width, T1 ran)
 {
@@ -14,6 +15,14 @@ void fillStringMatrix(char **matrix, int height, int width)
     for (size_t i = 0; i < height; i++)
         for (size_t j = 0; j < width; j++)
             cin >> matrix[i][j];
+}
+
+template <typename T1, typename T2>
+void deleteMatrix(T1 matrix, T2 width)
+{
+    for (size_t i = 0; i < width; i++)
+        delete[] matrix[i];
+    delete[] matrix;
 }
 
 template <typename T1, typename T2>
@@ -36,6 +45,7 @@ T1 **addHeight(T1 **matrix, T2 *height, T2 width, T1 ran)
         newmatrix[i] = matrix[i];
     for (size_t i = 0; i < width; i++)
         newmatrix[*height - 1][i] = rand() % 20 + ran;
+    deleteMatrix(matrix, width);
     matrix = newmatrix;
     return matrix;
 }
@@ -205,13 +215,7 @@ T1 **erase_col(T1 **matrix, T2 *height, T2 *width, T2 index)
     matrix = newmatrix;
     return matrix;
 }
-template <typename T1, typename T2>
-void deleteMatrix(T1 matrix, T2 width)
-{
-    for (size_t i = 0; i < width; i++)
-        delete[] matrix[i];
-    delete[] matrix;
-}
+
 int main()
 {
     srand(time(0));
@@ -479,129 +483,129 @@ int main()
             break;
         }
 
-            case 3:
+        case 3:
+        {
+            int width, height;
+            char run = 'a';
+            cout << "Enter a height: ";
+            cin >> height;
+            cout << "Enter width: ";
+            cin >> width;
+
+            char **matrix = new char *[height];
+            for (size_t i = 0; i < width; i++)
+                matrix[i] = new char[width];
+
+            cout << "Lets fill our matrxi enter characters: " << endl;
+            fillStringMatrix(matrix, height, width);
+            print(matrix, height, width);
+
+            cout << endl;
+
+            cout << "Enter  a operation: 1 - 12 --- 13 - Exit: ";
+            cin >> op;
+            while (op > 13)
             {
-                int width, height;
-                char run = 'a';
-                cout << "Enter a height: ";
-                cin >> height;
-                cout << "Enter width: ";
-                cin >> width;
-
-                char **matrix = new char *[height];
-                for (size_t i = 0; i < width; i++)
-                    matrix[i] = new char[width];
-
-                cout << "Lets fill our matrxi enter characters: " << endl;
-                fillStringMatrix(matrix, height, width);
-                print(matrix, height, width);
-
-                cout << endl;
-
-                cout << "Enter  a operation: 1 - 12 --- 13 - Exit: ";
+                cout << "Enter operation again: ";
+                cin >> op;
+            }
+            while (true)
+            {
+                if (op == 13)
+                {
+                    break;
+                }
+                switch (op)
+                {
+                case 1:
+                    matrix = addHeight(matrix, &height, width, run);
+                    print(matrix, height, width);
+                    break;
+                case 2:
+                    matrix = push_row_front(matrix, &height, width, run);
+                    print(matrix, height, width);
+                    break;
+                case 3:
+                    int indexHeight;
+                    cout << "Enter a row index: ";
+                    cin >> indexHeight;
+                    matrix = insertRow(matrix, &height, &width, indexHeight, run);
+                    print(matrix, height, width);
+                    break;
+                case 4:
+                    matrix = pop_row_front(matrix, &height, &width);
+                    print(matrix, height, width);
+                    break;
+                case 5:
+                    matrix = pop_row_back(matrix, &height, &width);
+                    print(matrix, height, width);
+                    break;
+                case 6:
+                    int eraseIndex;
+                    cout << "Enter a Height index: ";
+                    cin >> eraseIndex;
+                    while (eraseIndex > height)
+                    {
+                        cout << "Enter a Height index again!: ";
+                        cin >> eraseIndex;
+                    }
+                    matrix = erase_row(matrix, &height, &width, eraseIndex);
+                    print(matrix, height, width);
+                    break;
+                case 7:
+                    matrix = push_col_back(matrix, &height, &width, run);
+                    print(matrix, height, width);
+                    break;
+                case 8:
+                    matrix = push_col_front(matrix, &height, &width, run);
+                    print(matrix, height, width);
+                    break;
+                case 9:
+                    int ColIndex;
+                    cout << "Enter a col index: ";
+                    cin >> ColIndex;
+                    while (ColIndex > width)
+                    {
+                        cout << "Enter a col index: ";
+                        cin >> ColIndex;
+                    }
+                    matrix = instercol(matrix, &height, &width, ColIndex, run);
+                    print(matrix, height, width);
+                    break;
+                case 10:
+                    matrix = pop_col_back(matrix, &height, &width);
+                    print(matrix, height, width);
+                    break;
+                case 11:
+                    matrix = pop_col_front(matrix, &height, &width);
+                    print(matrix, height, width);
+                    break;
+                case 12:
+                    int EraseIndex;
+                    cout << "Enter a column index for delete: ";
+                    cin >> EraseIndex;
+                    while (EraseIndex > width)
+                    {
+                        cout << "Enter a column index for delete again!!!!!: ";
+                        cin >> EraseIndex;
+                    }
+                    matrix = erase_col(matrix, &height, &width, EraseIndex);
+                    print(matrix, height, width);
+                    break;
+                default:
+                    break;
+                }
+                cout << "Enter a operation 1-12 ---- 13 - Exit";
                 cin >> op;
                 while (op > 13)
                 {
-                    cout << "Enter operation again: ";
+                    cout << "Enter operatrion again : ";
                     cin >> op;
                 }
-                while (true)
-                {
-                    if (op == 13)
-                    {
-                        break;
-                    }
-                    switch (op)
-                    {
-                    case 1:
-                        matrix = addHeight(matrix, &height, width,run);
-                        print(matrix, height, width);
-                        break;
-                    case 2:
-                        matrix = push_row_front(matrix, &height, width,run);
-                        print(matrix, height, width);
-                        break;
-                    case 3:
-                        int indexHeight;
-                        cout << "Enter a row index: ";
-                        cin >> indexHeight;
-                        matrix = insertRow(matrix, &height, &width, indexHeight,run);
-                        print(matrix, height, width);
-                        break;
-                    case 4:
-                        matrix = pop_row_front(matrix, &height, &width);
-                        print(matrix, height, width);
-                        break;
-                    case 5:
-                        matrix = pop_row_back(matrix, &height, &width);
-                        print(matrix, height, width);
-                        break;
-                    case 6:
-                        int eraseIndex;
-                        cout << "Enter a Height index: ";
-                        cin >> eraseIndex;
-                        while (eraseIndex > height)
-                        {
-                            cout << "Enter a Height index again!: ";
-                            cin >> eraseIndex;
-                        }
-                        matrix = erase_row(matrix, &height, &width, eraseIndex);
-                        print(matrix, height, width);
-                        break;
-                    case 7:
-                        matrix = push_col_back(matrix, &height, &width,run);
-                        print(matrix, height, width);
-                        break;
-                    case 8:
-                        matrix = push_col_front(matrix, &height, &width,run);
-                        print(matrix, height, width);
-                        break;
-                    case 9:
-                        int ColIndex;
-                        cout << "Enter a col index: ";
-                        cin >> ColIndex;
-                        while (ColIndex > width)
-                        {
-                            cout << "Enter a col index: ";
-                            cin >> ColIndex;
-                        }
-                        matrix = instercol(matrix, &height, &width, ColIndex,run);
-                        print(matrix, height, width);
-                        break;
-                    case 10:
-                        matrix = pop_col_back(matrix, &height, &width);
-                        print(matrix, height, width);
-                        break;
-                    case 11:
-                        matrix = pop_col_front(matrix, &height, &width);
-                        print(matrix, height, width);
-                        break;
-                    case 12:
-                        int EraseIndex;
-                        cout << "Enter a column index for delete: ";
-                        cin >> EraseIndex;
-                        while (EraseIndex > width)
-                        {
-                            cout << "Enter a column index for delete again!!!!!: ";
-                            cin >> EraseIndex;
-                        }
-                        matrix = erase_col(matrix, &height, &width, EraseIndex);
-                        print(matrix, height, width);
-                        break;
-                    default:
-                        break;
-                    }
-                    cout << "Enter a operation 1-12 ---- 13 - Exit";
-                    cin >> op;
-                    while (op > 13)
-                    {
-                        cout << "Enter operatrion again : ";
-                        cin >> op;
-                    }
-                }
-                deleteMatrix(matrix, width);
-                break;
             }
+            deleteMatrix(matrix, width);
+            break;
+        }
 
         default:
             break;
