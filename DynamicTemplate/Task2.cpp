@@ -45,7 +45,6 @@ T1 **addHeight(T1 **matrix, T2 *height, T2 width, T1 ran)
         newmatrix[i] = matrix[i];
     for (size_t i = 0; i < width; i++)
         newmatrix[*height - 1][i] = rand() % 20 + ran;
-    deleteMatrix(matrix, width);
     matrix = newmatrix;
     return matrix;
 }
