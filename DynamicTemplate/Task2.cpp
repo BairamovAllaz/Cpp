@@ -2,6 +2,7 @@
 #include <ctime>
 using namespace std;
 //dynamic template
+//
 template <typename T1, typename T2>
 void fill(T1 **matrix, T2 height, T2 width, T1 ran)
 {
@@ -9,7 +10,6 @@ void fill(T1 **matrix, T2 height, T2 width, T1 ran)
         for (size_t j = 0; j < width; j++)
             matrix[i][j] = rand() % 20 + ran;
 }
-
 void fillStringMatrix(char **matrix, int height, int width)
 {
     for (size_t i = 0; i < height; i++)
