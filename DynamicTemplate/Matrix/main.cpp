@@ -1,219 +1,10 @@
-#include <iostream>
-#include <ctime>
-using namespace std;
-//dynamic template
-//
-template <typename T1, typename T2>
-void fill(T1 **matrix, T2 height, T2 width, T1 ran)
-{
-    for (size_t i = 0; i < height; i++)
-        for (size_t j = 0; j < width; j++)
-            matrix[i][j] = rand() % 20 + ran;
-}
-void fillStringMatrix(char **matrix, int height, int width)
-{
-    for (size_t i = 0; i < height; i++)
-        for (size_t j = 0; j < width; j++)
-            cin >> matrix[i][j];
-}
-
-template <typename T1, typename T2>
-void deleteMatrix(T1 matrix, T2 width)
-{
-    for (size_t i = 0; i < width; i++)
-        delete[] matrix[i];
-    delete[] matrix;
-}
-
-template <typename T1, typename T2>
-void print(T1 **matrix, T2 height, T2 width)
-{
-    for (size_t i = 0; i < height; ++i)
-    {
-        for (size_t j = 0; j < width; ++j)
-            cout << matrix[i][j] << " ";
-        cout << endl;
-    }
-}
-template <typename T1, typename T2>
-T1 **addHeight(T1 **matrix, T2 *height, T2 width, T1 ran)
-{
-    ++(*height);
-    T1 **newmatrix = new T1 *[*height];
-    newmatrix[*height - 1] = new T1[width];
-    for (int i = 0; i < *height - 1; i++)
-        newmatrix[i] = matrix[i];
-    for (size_t i = 0; i < width; i++)
-        newmatrix[*height - 1][i] = rand() % 20 + ran;
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **push_row_front(T1 **matrix, T2 *height, T2 width, T1 ran)
-{
-    ++(*height);
-    T1 **newmatrix = new T1 *[*height];
-    newmatrix[0] = new T1[width];
-    for (int i = 0; i < *height - 1; i++)
-        newmatrix[i + 1] = matrix[i];
-    for (size_t i = 0; i < width; i++)
-        newmatrix[0][i] = rand() % 20 + ran;
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **insertRow(T1 **matrix, T2 *height, T2 *width, T2 index, T1 ran)
-{
-    ++(*height);
-    T1 **newmatrix = new T1 *[*height];
-    for (int i = 0; i < index; i++)
-        newmatrix[i] = matrix[i];
-    newmatrix[index] = new T1[*width];
-    for (size_t i = 0; i < *width; i++)
-        newmatrix[index][i] = rand() % 20 + ran;
-    for (size_t i = index; i < *height; i++)
-    {
-        newmatrix[i + 1] = matrix[i];
-    }
-    matrix = newmatrix;
-    return matrix;
-}
-
-template <typename T1, typename T2>
-T1 **pop_row_front(T1 **matrix, T2 *height, T2 *width)
-{
-    --(*height);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *width; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i + 1][j];
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **pop_row_back(T1 **matrix, T2 *height, T2 *width)
-{
-    --(*height);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *width; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **erase_row(T1 **matrix, T2 *height, T2 *width, T2 index)
-{
-    --(*height);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *width; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < index; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
-    for (size_t i = index; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i + 1][j];
-    matrix = newmatrix;
-    return matrix;
-}
-
-template <typename T1, typename T2>
-T1 **push_col_back(T1 **matrix, T2 *height, T2 *width, T1 ran)
-{
-    ++(*width);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i][*width - 1] = rand() % 20 + ran;
-    matrix = newmatrix;
-    return matrix;
-}
-
-template <typename T1, typename T2>
-T1 **push_col_front(T1 **matrix, T2 *height, T2 *width, T1 ran)
-{
-    ++(*width);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j + 1] = matrix[i][j];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i][0] = rand() % 20 + ran;
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **instercol(T1 **matrix, T2 *height, T2 *width, T2 index, T1 ran)
-{
-    ++(*width);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < index; j++)
-            newmatrix[i][j] = matrix[i][j];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i][index] = rand() % 20 + ran;
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = index; j < *width; j++)
-            newmatrix[i][j + 1] = matrix[i][j];
-    matrix = newmatrix;
-    return matrix;
-}
-
-template <typename T1, typename T2>
-T1 **pop_col_back(T1 **matrix, T2 *height, T2 *width)
-{
-    --(*width);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **pop_col_front(T1 **matrix, T2 *height, T2 *width)
-{
-    --(*width);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j + 1];
-    matrix = newmatrix;
-    return matrix;
-}
-template <typename T1, typename T2>
-T1 **erase_col(T1 **matrix, T2 *height, T2 *width, T2 index)
-{
-    --(*width);
-    T1 **newmatrix = new T1 *[*height];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i] = new T1[*width];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < index; j++)
-            newmatrix[i][j] = matrix[i][j];
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = index; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j + 1];
-    matrix = newmatrix;
-    return matrix;
-}
+#include "stdafx.h"
+#include "Print.h"
+#include "Print.cpp"
+#include "Fillarr.h"
+#include "Fillarr.cpp"
+#include "Functions.h"
+#include "Functions.cpp"
 
 int main()
 {
@@ -232,9 +23,7 @@ int main()
     while (true)
     {
         if (ArrOp == 4)
-        {
             break;
-        }
         switch (ArrOp)
         {
         case 1:
@@ -249,12 +38,9 @@ int main()
             int **matrix = new int *[height];
             for (size_t i = 0; i < width; i++)
                 matrix[i] = new int[width];
-
             fill(matrix, height, width, ran);
             print(matrix, height, width);
-
             cout << endl;
-
             cout << "Enter  a operation: 1 - 12 --- 13 - Exit: ";
             cin >> op;
             while (op > 13)
@@ -265,9 +51,7 @@ int main()
             while (true)
             {
                 if (op == 13)
-                {
                     break;
-                }
                 switch (op)
                 {
                 case 1:
@@ -387,9 +171,7 @@ int main()
             while (true)
             {
                 if (op == 13)
-                {
                     break;
-                }
                 switch (op)
                 {
                 case 1:
@@ -494,9 +276,8 @@ int main()
             char **matrix = new char *[height];
             for (size_t i = 0; i < width; i++)
                 matrix[i] = new char[width];
-
             cout << "Lets fill our matrxi enter characters: " << endl;
-            fillStringMatrix(matrix, height, width);
+            fill(matrix, height, width,run);
             print(matrix, height, width);
 
             cout << endl;
@@ -511,9 +292,7 @@ int main()
             while (true)
             {
                 if (op == 13)
-                {
                     break;
-                }
                 switch (op)
                 {
                 case 1:

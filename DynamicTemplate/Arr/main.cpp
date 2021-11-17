@@ -1,111 +1,11 @@
-#include <iostream>
-#include <ctime>
-using namespace std;
 
-template <typename T1, typename T2>
-void fillarray(T1 *arr, T2 *size,T1 ran)
-{
-    for (size_t i = 0; i < *size; i++)
-        arr[i] = rand() % 20 + ran;
-}
-
-template <typename T1, typename T2>
-void PrintArray(T1 *arr, T2 *size)
-{
-    for (size_t i = 0; i < *size; i++)
-        cout << arr[i] << endl;
-}
-
-void printString(char *string)
-{
-    cout << string << endl;
-}
-
-template <typename T1, typename T2, typename T3>
-T1 *addNum(T1 *arr, T3 num, T2 *size)
-{
-    ++(*size);
-    T1 *newarr = new T1[*size];
-    newarr[*size - 1] = num;
-    for (size_t i = 0; i < *size - 1; i++)
-        newarr[i] = arr[i];
-    delete[] arr;
-    arr = newarr;
-    return arr;
-}
-template <typename T1, typename T2, typename T3>
-T1 *push_front(T1 *arr, T3 num, T2 *size)
-{
-    ++(*size);
-    T1 *newarr = new T1[*size];
-    newarr[0] = num;
-    for (size_t i = 0; i < *size; i++)
-        newarr[i + 1] = arr[i];
-    delete[] arr;
-    arr = newarr;
-    return arr;
-}
-template <typename T1, typename T2, typename T3>
-T1 *IndexAddNum(T1 *arr, T2 index, T3 number, T2 *size)
-{
-    ++(*size);
-    T1 *newarr = new T1[*size];
-    for (size_t i = 0; i < index; i++)
-        newarr[i] = arr[i];
-    newarr[index] = number;
-    for (size_t i = index; i < *size; i++)
-        newarr[i + 1] = arr[i];
-    delete[] arr;
-    arr = newarr;
-    return arr;
-}
-template <typename T1, typename T2>
-T1 *DeleteLast(T1 *arr, T2 *size)
-{
-    --(*size);
-    T1 *newarr = new T1[*size];
-    for (size_t i = 0; i < *size; i++)
-        newarr[i] = arr[i];
-    delete[] arr;
-    arr = newarr;
-    return arr;
-}
-template <typename T1, typename T2>
-T1 *DeleteFirst(T1 *arr, T2 *size)
-{
-    --(*size);
-    T1 *newarr = new T1[*size];
-    for (size_t i = 0; i < *size; i++)
-        newarr[i] = arr[i + 1];
-    delete[] arr;
-    arr = newarr;
-    return arr;
-}
-template <typename T1, typename T2>
-T1 *DeleteIndex(T1 *arr, T2 index, T2 *size)
-{
-    --(*size);
-    T1 *newarr = new T1[*size];
-    for (size_t i = 0; i < index; i++)
-        newarr[i] = arr[i];
-    for (size_t i = index; i < *size; i++)
-        newarr[i] = arr[i + 1];
-    delete[] arr;
-    arr = newarr;
-    return arr;
-}
-
-int SizeOfString(char *string)
-{
-    int length = 0;
-    while (*string)
-    {
-        ++length;
-        ++string;
-    }
-    return length;
-}
-
+#include "stdafx.h"
+#include "Fillarr.h"
+#include "Fillarr.cpp"
+#include "Print.h"
+#include "Print.cpp"
+#include "Task1Functions.h"
+#include "Task1Functions.cpp"
 int main()
 {
     srand(time(0));
