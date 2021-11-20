@@ -1,11 +1,10 @@
 #include "stdafx.h"
-#include "Print.h"
-#include "Print.cpp"
 #include "Fillarr.h"
 #include "Fillarr.cpp"
+#include "Print.h"
+#include "Print.cpp"
 #include "Functions.h"
 #include "Functions.cpp"
-
 int main()
 {
     srand(time(0));
@@ -23,7 +22,9 @@ int main()
     while (true)
     {
         if (ArrOp == 4)
+        {
             break;
+        }
         switch (ArrOp)
         {
         case 1:
@@ -38,9 +39,12 @@ int main()
             int **matrix = new int *[height];
             for (size_t i = 0; i < width; i++)
                 matrix[i] = new int[width];
+
             fill(matrix, height, width, ran);
             print(matrix, height, width);
+
             cout << endl;
+
             cout << "Enter  a operation: 1 - 12 --- 13 - Exit: ";
             cin >> op;
             while (op > 13)
@@ -51,7 +55,9 @@ int main()
             while (true)
             {
                 if (op == 13)
+                {
                     break;
+                }
                 switch (op)
                 {
                 case 1:
@@ -171,7 +177,9 @@ int main()
             while (true)
             {
                 if (op == 13)
+                {
                     break;
+                }
                 switch (op)
                 {
                 case 1:
@@ -276,8 +284,8 @@ int main()
             char **matrix = new char *[height];
             for (size_t i = 0; i < width; i++)
                 matrix[i] = new char[width];
-            cout << "Lets fill our matrxi enter characters: " << endl;
-            fill(matrix, height, width,run);
+
+            fill(matrix, height, width, run);
             print(matrix, height, width);
 
             cout << endl;
@@ -292,7 +300,9 @@ int main()
             while (true)
             {
                 if (op == 13)
+                {
                     break;
+                }
                 switch (op)
                 {
                 case 1:

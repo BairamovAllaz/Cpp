@@ -1,10 +1,6 @@
 #include "stdrfx.h"
 #include "Function.h"
 #include "Function.cpp"
-
-
-
-
 int main()
 {
     srand(time(0));

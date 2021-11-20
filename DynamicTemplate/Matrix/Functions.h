@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+template <typename T1>void fill(T1 **matrix, int height, int width, T1 ran);
 template <typename T1, typename T2> void deleteMatrix(T1 matrix, T2 width);
 template <typename T1, typename T2> T1 **addHeight(T1 **matrix, T2 *height, T2 width, T1 ran);
 template <typename T1, typename T2> T1 **push_row_front(T1 **matrix, T2 *height, T2 width, T1 ran);
