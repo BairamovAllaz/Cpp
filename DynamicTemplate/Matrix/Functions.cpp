@@ -22,109 +22,121 @@ T **AllocateMatrix(int *height, int *width)
 template <typename T1>
 T1 **addHeight(T1 **matrix, int *height, int width, T1 ran)
 {
-    ++(*height);
-    T1 **newmatrix = AllocateMatrix<T1>(height, &width);
-    newmatrix[*height - 1] = new T1[width]{};
+    // ++(*height);
+    // T1 **newmatrix = AllocateMatrix<T1>(height, &width);
+    // newmatrix[*height - 1] = new T1[width]{};
+    // for (int i = 0; i < *height - 1; i++)
+    //     newmatrix[i] = matrix[i];
+    // for (size_t i = 0; i < width; i++)
+    //     newmatrix[*height - 1][i] = rand() % 20 + ran;
+    // matrix = newmatrix;
+    T1 **Buffer = addNum(matrix, new T1[width]{}, height);
     for (int i = 0; i < *height - 1; i++)
-        newmatrix[i] = matrix[i];
-    for (size_t i = 0; i < width; i++)
-        newmatrix[*height - 1][i] = rand() % 20 + ran;
-
-    matrix = newmatrix;
-    return matrix;
+        Buffer[*height - 1][i] = rand() % 20 + ran;
+    return Buffer;
 }
 template <typename T1>
 T1 **push_row_front(T1 **matrix, int *height, int width, T1 ran)
 {
-    ++(*height);
-    T1 **newmatrix =AllocateMatrix<T1>(height, &width);
-    newmatrix[0] = new T1[width]{};
-    for (int i = 0; i < *height - 1; i++)
-        newmatrix[i + 1] = matrix[i];
+    // ++(*height);
+    // T1 **newmatrix =AllocateMatrix<T1>(height, &width);
+    // newmatrix[0] = new T1[width]{};
+    // for (int i = 0; i < *height - 1; i++)
+    //     newmatrix[i + 1] = matrix[i];
+    // for (size_t i = 0; i < width; i++)
+    //     newmatrix[0][i] = rand() % 20 + ran;
+    // delete[] matrix;
+    // matrix = newmatrix;
+    T1 **newmatrix = push_front(matrix, new T1[width]{}, height);
     for (size_t i = 0; i < width; i++)
         newmatrix[0][i] = rand() % 20 + ran;
-    delete[] matrix;
-    matrix = newmatrix;
-    return matrix;
+    return newmatrix;
 }
 template <typename T1>
 T1 **insertRow(T1 **matrix, int *height, int *width, int index, T1 ran)
 {
-    ++(*height);
-    T1 **newmatrix = AllocateMatrix<T1>(height, width);
-    for (int i = 0; i < index; i++)
-        newmatrix[i] = matrix[i];
-    newmatrix[index] = new T1[*width]{};
-    for (size_t i = 0; i < *width; i++)
-        newmatrix[index][i] = rand() % 20 + ran;
-    for (size_t i = index; i < *height; i++)
-    {
-        newmatrix[i + 1] = matrix[i];
-    }
-    delete[] matrix;
-    matrix = newmatrix;
-    return matrix;
+    // ++(*height);
+    // T1 **newmatrix = AllocateMatrix<T1>(height, width);
+    // for (int i = 0; i < index; i++)
+    //     newmatrix[i] = matrix[i];
+    // newmatrix[index] = new T1[*width]{};
+    // for (size_t i = 0; i < *width; i++)
+    //     newmatrix[index][i] = rand() % 20 + ran;
+    // for (size_t i = index; i < *height; i++)
+    // {
+    //     newmatrix[i + 1] = matrix[i];
+    // }
+    // delete[] matrix;
+    // matrix = newmatrix;
+    T1 **Buffer = IndexAddNum(matrix, index, new T1[*width]{}, height);
+    for (int i = 0; i < *height - 1; i++)
+        Buffer[index][i] = rand() % 20 + ran;
+    return Buffer;
 }
 
 template <typename T1>
 T1 **pop_row_front(T1 **matrix, int *height, int *width)
 {
-    --(*height);
-    T1 **newmatrix = AllocateMatrix<T1>(height, width);
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i + 1][j];
-    delete[] matrix;
-    matrix = newmatrix;
-    return matrix;
+    // --(*height);
+    // T1 **newmatrix = AllocateMatrix<T1>(height, width);
+    // for (size_t i = 0; i < *height; i++)
+    //     for (size_t j = 0; j < *width; j++)
+    //         newmatrix[i][j] = matrix[i + 1][j];
+    // delete[] matrix;
+    // matrix = newmatrix;
+    return DeleteFirst(matrix,height);
 }
 template <typename T1>
 T1 **pop_row_back(T1 **matrix, int *height, int *width)
 {
-    --(*height);
-    T1 **newmatrix = AllocateMatrix<T1>(height, width);
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
-    delete[] matrix;
-    matrix = newmatrix;
-    return matrix;
+    // --(*height);
+    // T1 **newmatrix = AllocateMatrix<T1>(height, width);
+    // for (size_t i = 0; i < *height; i++)
+    //     for (size_t j = 0; j < *width; j++)
+    //         newmatrix[i][j] = matrix[i][j];
+    // delete[] matrix;
+    // matrix = newmatrix;
+    return DeleteLast(matrix,height);
 }
-
 ///
-
 template <typename T1>
 T1 **erase_row(T1 **matrix, int *height, int *width, int index)
 {
-    --(*height);
-    T1 **newmatrix = AllocateMatrix<T1>(height,width);
+    // --(*height);
+    // T1 **newmatrix = AllocateMatrix<T1>(height, width);
 
-    for (size_t i = 0; i < index; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
+    // for (size_t i = 0; i < index; i++)
+    //     for (size_t j = 0; j < *width; j++)
+    //         newmatrix[i][j] = matrix[i][j];
 
-    for (size_t i = index; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i + 1][j];
-    delete[] matrix;
-    matrix = newmatrix;
-    return matrix;
+    // for (size_t i = index; i < *height; i++)
+    //     for (size_t j = 0; j < *width; j++)
+    //         newmatrix[i][j] = matrix[i + 1][j];
+    // delete[] matrix;
+    // matrix = newmatrix;
+    return DeleteIndex(matrix,index,height);
 }
 
-template <typename T1>
+template <typename T1,typename T2>
 T1 **push_col_back(T1 **matrix, int *height, int *width, T1 ran)
 {
-    ++(*width);
-    T1 **newmatrix = AllocateMatrix<T1>(height, width);
+    // ++(*width);
+    // T1 **newmatrix = AllocateMatrix<T1>(height, width);
 
-    for (size_t i = 0; i < *height; i++)
-        for (size_t j = 0; j < *width; j++)
-            newmatrix[i][j] = matrix[i][j];
-    for (size_t i = 0; i < *height; i++)
-        newmatrix[i][*width - 1] = rand() % 20 + ran;
+    // for (size_t i = 0; i < *height; i++)
+    //     for (size_t j = 0; j < *width; j++)
+    //         newmatrix[i][j] = matrix[i][j];
+    // for (size_t i = 0; i < *height; i++)
+    //     newmatrix[i][*width - 1] = rand() % 20 + ran;
 
-    delete[] matrix;
-    matrix = newmatrix;
+    // delete[] matrix;
+    // matrix = newmatrix;
+    for (size_t i = 0; i < *height; i++)
+    {
+        matrix[i] = addNum(matrix,T1(),width);
+    }
+    for (size_t i = 0; i < *height; i++)
+        matrix[i][*width - 1] = rand() % 20 + ran;
     return matrix;
 }
 
@@ -147,7 +159,8 @@ template <typename T1>
 T1 **instercol(T1 **matrix, int *height, int *width, int index, T1 ran)
 {
     ++(*width);
-    T1 **newmatrix = AllocateMatrix<T1>(height, width);;
+    T1 **newmatrix = AllocateMatrix<T1>(height, width);
+    ;
     for (size_t i = 0; i < *height; i++)
         for (size_t j = 0; j < index; j++)
             newmatrix[i][j] = matrix[i][j];
